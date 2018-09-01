@@ -9,7 +9,7 @@ import org.jdbi.v3.core.argument.Argument;
 import org.jdbi.v3.core.config.ConfigRegistry;
 import org.jdbi.v3.core.statement.StatementContext;
 import org.postgresql.util.PGobject;
-import rs.grivet.jdbi.test.User;
+import rs.grivet.postgres.types.PostgresTypes;
 
 /**
  *
@@ -26,9 +26,9 @@ public class PGObjectArrayArgumentFactory extends AbstractArgumentFactory<PGobje
         return new Argument() {
             @Override
             public void apply(int position, PreparedStatement statement, StatementContext ctx) throws SQLException {
-                ((org.postgresql.PGConnection) statement.getConnection()).addDataType("player_type", User.class);
+                ((org.postgresql.PGConnection) statement.getConnection()).addDataType(PostgresTypes.getTypeName(value.getClass().getComponentType()), (Class<? extends PGobject>) value.getClass().getComponentType());
                 
-                Array array = statement.getConnection().createArrayOf("player_type", value);
+                Array array = statement.getConnection().createArrayOf(PostgresTypes.getTypeName(value.getClass().getComponentType()), value);
                 statement.setArray(position, array);
             }
         };

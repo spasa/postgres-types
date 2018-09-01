@@ -1,4 +1,4 @@
-package rs.grivet.jdbi.test;
+package rs.grivet.postgres.types;
 
 import java.sql.SQLException;
 import org.postgresql.util.PGobject;
@@ -9,6 +9,10 @@ import org.postgresql.util.PGtokenizer;
  * @author spasa
  */
 public class User extends PGobject {
+    
+    private Long id;
+    private String firstName;
+    private String lastName;
 
     public User(Long id, String firstName, String lastName) {
         this.id = id;
@@ -18,10 +22,6 @@ public class User extends PGobject {
 
     public User() {
     }
-
-    private Long id;
-    private String firstName;
-    private String lastName;
 
     public Long getId() {
         return id;
@@ -61,9 +61,4 @@ public class User extends PGobject {
         lastName = t.getToken(2);
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", firstName=" + firstName + '}';
-    }
-    
 }
